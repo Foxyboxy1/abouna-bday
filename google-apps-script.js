@@ -36,19 +36,25 @@ function doPost(e) {
       sheet.appendRow(["التاريخ والوقت", "الاسم", "الرسالة"]);
     }
 
-    var data = {};
-    if (e && e.postData && e.postData.contents) {
-      try {
-        data = JSON.parse(e.postData.contents);
-      } catch (err) {
-        data = e.parameter || {};
-      }
-    } else if (e && e.parameter) {
-      data = e.parameter;
+    var name = "محب لأبونا";
+    var message = "";
+
+    // 1. محاولة قراءة البيانات من المعاملات المباشرة (URLSearchParams / Form)
+    if (e && e.parameter && e.parameter.message) {
+      name = e.parameter.name ? e.parameter.name.toString().trim() : name;
+      message = e.parameter.message.toString().trim();
     }
 
-    var name = (data.name && data.name.trim()) ? data.name.trim() : "محب لأبونا";
-    var message = (data.message && data.message.trim()) ? data.message.trim() : "";
+    // 2. محاولة قراءة البيانات من نص الـ JSON في حال إرسالها كـ JSON
+    if (!message && e && e.postData && e.postData.contents) {
+      try {
+        var parsed = JSON.parse(e.postData.contents);
+        if (parsed.name) name = parsed.name.toString().trim();
+        if (parsed.message) message = parsed.message.toString().trim();
+      } catch (err) {
+        // إذا كان نص عادي مش JSON
+      }
+    }
 
     if (!message) {
       return ContentService.createTextOutput(JSON.stringify({

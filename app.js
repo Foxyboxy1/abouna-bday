@@ -79,16 +79,27 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      if (CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL.trim() !== "") {
-        // إرسال لـ Google Apps Script
-        // استخدام mode: 'no-cors' لتجنب مشاكل CORS Preflight في المتصفحات
-        await fetch(CONFIG.GOOGLE_SCRIPT_URL.trim(), {
+      const scriptUrl = CONFIG.GOOGLE_SCRIPT_URL ? CONFIG.GOOGLE_SCRIPT_URL.trim() : "";
+
+      if (scriptUrl) {
+        // تحذير في الكونسول إذا كان الرابط هو رابط الـ echo المؤقت
+        if (scriptUrl.includes("script.googleusercontent.com")) {
+          console.warn("تنبيه: الرابط المستخدم هو رابط إعادة توجيه مؤقت من جوجل وليس رابط Web app الأصلي المنتهي بـ /exec");
+        }
+
+        // إرسال لـ Google Apps Script كـ URLSearchParams لضمان قراءته بسلاسة وبدون تعليق CORS
+        const formParams = new URLSearchParams();
+        formParams.append("name", name);
+        formParams.append("message", message);
+        formParams.append("date", formattedDate);
+
+        await fetch(scriptUrl, {
           method: "POST",
           mode: "no-cors",
           headers: {
-            "Content-Type": "text/plain;charset=utf-8",
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
           },
-          body: JSON.stringify(payload),
+          body: formParams.toString(),
         });
 
         // حفظ محلي احتياطي أيضاً
