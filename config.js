@@ -12,8 +12,8 @@ const CONFIG = {
   SUBTITLE: "أرسل كلمتك الطيبة ومحبتك لقدس أبونا دميان بمناسبة عيد ميلاده المبارك",
 
   // 3. رابط مخصص للـ QR Code (اختياري)
-  // إذا تركته فارغاً ""، سيأخذ الرابط تلقائياً من رابط الصفحة الحالي
-  CUSTOM_QR_URL: "",
+  // تم ربطه برابط الموقع المباشر على GitHub Pages
+  CUSTOM_QR_URL: "https://foxyboxy1.github.io/abouna-bday/",
 
   // 4. هل تحب عرض الرسائل السابقة للجميع أسفل الصفحة؟ (true = نعم، false = إخفاء)
   SHOW_MESSAGES_LIST: true,
