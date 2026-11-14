@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>تهنئة عيد ميلاد أبونا دميان 🎂</title>
+  
+  <!-- خطوط عربية أنيقة من Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- ملف التنسيق -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- خلفية جمالية خفيفة -->
+  <div class="bg-pattern"></div>
+
+  <div class="container">
+    <!-- ترويسة الصفحة -->
+    <header class="header-card">
+      <div class="qr-quick-btn-wrapper">
+        <button id="openQrBtn" class="btn-qr-floating" title="عرض رمز QR Code للمشاركة">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>رمز الـ QR</span>
+        </button>
+      </div>
+
+      <div class="avatar-container">
+        <div class="avatar-ring">
+          <!-- صورة قدس أبونا (تقدر تسمي الصورة abouna.jpg وتحطها في نفس الفولدر) -->
+          <img id="abounaImg" src="abouna.jpg" alt="أبونا دميان" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23c5a059\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'%231e2238\' stroke=\'%23c5a059\' stroke-width=\'4\'/><path d=\'M50 20 L50 80 M30 38 L70 38\' stroke=\'%23c5a059\' stroke-width=\'6\' stroke-linecap=\'round\'/><circle cx=\'50\' cy=\'38\' r=\'4\' fill=\'%23c5a059\'/></svg>'">
+        </div>
+        <div class="candle-badge">🕯️</div>
+      </div>
+
+      <div class="badge-tag">سنة مباركة جديدة</div>
+      <h1 class="main-title">كل سنة وقدسك طيب يا أبونا دميان 🎂</h1>
+      <p class="subtitle">سنين كتيرة مباركة ومثمرة في رعاية الفادي وخدمة كنيسته المقدسة</p>
+      
+      <div class="header-verse">
+        «اُذْكُرُوا مُرْشِدِيكُمُ... وَتَمَثَّلُوا بِإِيمَانِهِمْ» (عب 13 : 7)
+      </div>
+    </header>
+
+    <!-- بطاقة كتابة التهنئة -->
+    <main class="main-content">
+      <section class="card form-card">
+        <div class="card-header">
+          <div class="icon-circle">✍️</div>
+          <h2>اكتب رسالتك لقدس أبونا</h2>
+          <p>كلمتك الطيبة وأمنيتك الصادقة هتوصل لقدسه وبتفرّح قلبه</p>
+        </div>
+
+        <form id="wishForm" autocomplete="off">
+          <!-- خانة الاسم -->
+          <div class="form-group">
+            <label for="senderName">اسمك <span class="label-hint">(اختياري - اتركه فارغاً إذا أردت إرسالها بدون اسم)</span></label>
+            <div class="input-wrapper">
+              <input type="text" id="senderName" name="name" placeholder="اكتب اسمك الكريم هنا..." maxlength="60">
+              <span class="field-icon">👤</span>
+            </div>
+          </div>
+
+          <!-- خانة نص الرسالة -->
+          <div class="form-group">
+            <label for="senderMessage">رسالة التهنئة أو المحبة <span class="required">*</span></label>
+            <div class="textarea-wrapper">
+              <textarea id="senderMessage" name="message" rows="4" placeholder="اكتب كلمتك الطيبة، صلاتك، أمنيتك، أو آية محببة لقدس أبونا دميان..." required maxlength="600"></textarea>
+            </div>
+            <div class="char-counter"><span id="charCount">0</span> / 600</div>
+          </div>
+
+          <!-- زر الإرسال -->
+          <button type="submit" id="submitBtn" class="btn btn-primary">
+            <span class="btn-text">إرسال التهنئة 💌</span>
+            <span class="btn-spinner" style="display: none;">
+              <span class="spinner"></span> جاري الإرسال...
+            </span>
+          </button>
+        </form>
+
+        <!-- رسالة النجاح -->
+        <div id="successNotice" class="alert alert-success" style="display: none;">
+          <div class="alert-icon">🎉</div>
+          <div>
+            <strong>شكراً لمشاركتك ومحبتك!</strong>
+            <p>وصلت تهنئتك الجميلة، وكل سنة وأبونا دميان بألف خير ونعمة.</p>
+          </div>
+        </div>
+
+        <!-- رسالة الخطأ إن حدثت -->
+        <div id="errorNotice" class="alert alert-error" style="display: none;">
+          <div class="alert-icon">⚠️</div>
+          <div id="errorMessage">حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.</div>
+        </div>
+      </section>
+
+      <!-- جدار التهاني (عرض الرسائل السابقة) -->
+      <section id="messagesSection" class="card messages-card">
+        <div class="messages-header">
+          <div class="messages-title-wrap">
+            <div class="icon-circle gold">📜</div>
+            <div>
+              <h3>لوحة التهاني والمحبة</h3>
+              <p class="section-desc">رسائل شعب الكنيسة والمحبين لأبونا دميان</p>
+            </div>
+          </div>
+          <button id="refreshBtn" class="btn-refresh" title="تحديث الرسائل">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 4v6h-6"></path>
+              <path d="M1 20v-6h6"></path>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <span>تحديث</span>
+          </button>
+        </div>
+
+        <!-- قائمة الرسائل -->
+        <div id="messagesList" class="messages-list">
+          <div class="empty-state">
+            <div class="empty-icon">🕊️</div>
+            <p>جاري تحميل الرسائل...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer class="footer">
+      <p>صُنعت بمحبة للاحتفال بعيد ميلاد قدس أبونا دميان 🤍</p>
+      <div class="footer-links">
+        <button id="footerQrBtn" class="link-btn">📱 عرض رمز QR للطباعة</button>
+        <span>•</span>
+        <button id="copyLinkBtn" class="link-btn">🔗 نسخ الرابط</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- نافذة الـ QR Code المنبثقة (Modal) -->
+  <div id="qrModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-card">
+      <button id="closeQrBtn" class="modal-close" title="إغلاق">&times;</button>
+      
+      <div class="modal-header">
+        <div class="modal-badge">مسح ضوئي ومشاركة</div>
+        <h3>رمز الاستجابة السريعة (QR Code)</h3>
+        <p>امسح الكود بكاميرا الموبايل لكتابة التهنئة، أو قم بتحميله لطباعته في الكنيسة</p>
+      </div>
+
+      <!-- حاوية الكود -->
+      <div class="qr-canvas-box">
+        <div id="qrCodeContainer"></div>
+      </div>
+
+      <div class="qr-url-box">
+        <input type="text" id="shareUrlInput" readonly>
+      </div>
+
+      <!-- أزرار الإجراءات -->
+      <div class="modal-actions">
+        <button id="downloadQrBtn" class="btn btn-secondary">
+          <span>📥 تحميل الـ QR كصورة (PNG)</span>
+        </button>
+        <button id="modalCopyBtn" class="btn btn-primary">
+          <span>📋 نسخ الرابط</span>
+        </button>
+        <a id="whatsappShareBtn" href="#" target="_blank" class="btn btn-whatsapp">
+          <span>💬 مشاركة عبر واتساب</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- تنبيه مؤقت (Toast) -->
+  <div id="toast" class="toast">تم نسخ الرابط بنجاح!</div>
+
+  <!-- المكتبات المحلية -->
+  <script src="lib/qrcode.min.js"></script>
+  <script src="lib/confetti.browser.min.js"></script>
+  
+  <!-- ملف الإعدادات وملف الجافاسكربت -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
